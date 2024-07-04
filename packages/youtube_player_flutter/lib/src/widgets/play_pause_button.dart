@@ -26,8 +26,7 @@ class PlayPauseButton extends StatefulWidget {
   State<PlayPauseButton> createState() => _PlayPauseButtonState();
 }
 
-class _PlayPauseButtonState extends State<PlayPauseButton>
-    with TickerProviderStateMixin {
+class _PlayPauseButtonState extends State<PlayPauseButton> with TickerProviderStateMixin {
   late YoutubePlayerController _controller;
   late AnimationController _animController;
 
@@ -54,6 +53,10 @@ class _PlayPauseButtonState extends State<PlayPauseButton>
       _controller = widget.controller!;
     } else {
       _controller = controller;
+      _controller.addListener(() {
+        _controller = controller;
+        setState(() {});
+      });
     }
     _controller.removeListener(_playPauseListener);
     _controller.addListener(_playPauseListener);
@@ -66,9 +69,7 @@ class _PlayPauseButtonState extends State<PlayPauseButton>
     super.dispose();
   }
 
-  void _playPauseListener() => _controller.value.isPlaying
-      ? _animController.forward()
-      : _animController.reverse();
+  void _playPauseListener() => _controller.value.isPlaying ? _animController.forward() : _animController.reverse();
 
   @override
   Widget build(BuildContext context) {
@@ -77,16 +78,12 @@ class _PlayPauseButtonState extends State<PlayPauseButton>
         playerState == PlayerState.playing ||
         playerState == PlayerState.paused) {
       return Visibility(
-        visible: playerState == PlayerState.cued ||
-            !_controller.value.isPlaying ||
-            _controller.value.isControlsVisible,
+        visible: playerState == PlayerState.cued || !_controller.value.isPlaying || _controller.value.isControlsVisible,
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             borderRadius: BorderRadius.circular(50.0),
-            onTap: () => _controller.value.isPlaying
-                ? _controller.pause()
-                : _controller.play(),
+            onTap: () => _controller.value.isPlaying ? _controller.pause() : _controller.play(),
             child: AnimatedIcon(
               icon: AnimatedIcons.play_pause,
               progress: _animController.view,
