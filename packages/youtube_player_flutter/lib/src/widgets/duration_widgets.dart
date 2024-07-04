@@ -11,9 +11,10 @@ import '../utils/youtube_player_controller.dart';
 class CurrentPosition extends StatefulWidget {
   /// Overrides the default [YoutubePlayerController].
   final YoutubePlayerController? controller;
+  final TextStyle? textStyle;
 
   /// Creates [CurrentPosition] widget.
-  const CurrentPosition({super.key, this.controller});
+  const CurrentPosition({super.key, this.controller, this.textStyle});
 
   @override
   State<CurrentPosition> createState() => _CurrentPositionState();
@@ -56,10 +57,11 @@ class _CurrentPositionState extends State<CurrentPosition> {
       durationFormatter(
         _controller.value.position.inMilliseconds,
       ),
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 12.0,
-      ),
+      style: widget.textStyle ??
+          const TextStyle(
+            color: Colors.white,
+            fontSize: 12.0,
+          ),
     );
   }
 }
@@ -67,10 +69,11 @@ class _CurrentPositionState extends State<CurrentPosition> {
 /// A widget which displays the remaining duration of the video.
 class RemainingDuration extends StatefulWidget {
   /// Creates [RemainingDuration] widget.
-  const RemainingDuration({super.key, this.controller});
+  const RemainingDuration({super.key, this.controller, this.textStyle});
 
   /// Overrides the default [YoutubePlayerController].
   final YoutubePlayerController? controller;
+  final TextStyle? textStyle;
 
   @override
   State<RemainingDuration> createState() => _RemainingDurationState();
@@ -111,13 +114,13 @@ class _RemainingDurationState extends State<RemainingDuration> {
   Widget build(BuildContext context) {
     return Text(
       "- ${durationFormatter(
-        (_controller.metadata.duration.inMilliseconds) -
-            (_controller.value.position.inMilliseconds),
+        (_controller.metadata.duration.inMilliseconds) - (_controller.value.position.inMilliseconds),
       )}",
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 12.0,
-      ),
+      style: widget.textStyle ??
+          const TextStyle(
+            color: Colors.white,
+            fontSize: 12.0,
+          ),
     );
   }
 }
