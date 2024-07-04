@@ -94,6 +94,23 @@ class _PlayPauseButtonState extends State<PlayPauseButton> with TickerProviderSt
         ),
       );
     }
+    if ((!_controller.flags.autoPlay && _controller.value.isReady) || playerState == PlayerState.ended) {
+      return Visibility(
+        visible: playerState == PlayerState.cued || !_controller.value.isPlaying || _controller.value.isControlsVisible,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(50.0),
+            onTap: () => _controller.seekTo(Duration.zero),
+            child: Icon(
+              Icons.replay,
+              color: Colors.white,
+              size: 60.0,
+            ),
+          ),
+        ),
+      );
+    }
     if (_controller.value.hasError) return const SizedBox();
     return widget.bufferIndicator ??
         const SizedBox.square(

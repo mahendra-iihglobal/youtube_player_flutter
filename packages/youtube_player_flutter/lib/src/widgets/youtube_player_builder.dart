@@ -31,8 +31,7 @@ class YoutubePlayerBuilder extends StatefulWidget {
   State<YoutubePlayerBuilder> createState() => _YoutubePlayerBuilderState();
 }
 
-class _YoutubePlayerBuilderState extends State<YoutubePlayerBuilder>
-    with WidgetsBindingObserver {
+class _YoutubePlayerBuilderState extends State<YoutubePlayerBuilder> with WidgetsBindingObserver {
   final GlobalKey playerKey = GlobalKey();
 
   @override
@@ -73,8 +72,6 @@ class _YoutubePlayerBuilderState extends State<YoutubePlayerBuilder>
           final controller = widget.player.controller;
           if (controller.value.isFullScreen) {
             widget.player.controller.toggleFullScreenMode();
-          } else {
-            Navigator.pop(context);
           }
         },
         child: widget.player,
